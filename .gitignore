@@ -1,0 +1,30 @@
+# build files
+*.o
+*.d
+*.axf
+*.map
+*.hex
+*.lnp
+*.htm
+
+# keil
+*.uvoptx
+*.uvguix.*
+*.bak
+
+# debug folder
+Debug/
+Release/
+
+# build directory
+menu/MDK-ARM/menu/
+
+# logs
+*.log
+
+# docs
+*.pdf
+
+# system
+.DS_Store
+Thumbs.db
