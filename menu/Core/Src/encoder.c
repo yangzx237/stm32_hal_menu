@@ -13,17 +13,16 @@
 	
 //二次修改，不采用清空cnt寄存器的操作，这样在快速旋转中容易卡死，程序读取到的值一直处于错误区间，
 //采用记录cnt差值的方式
+//由于整形表达式计算过程会发生类型提升，16位提升为32位，回绕问题要单独处理，发生概率较低
 		int16_t diff = cnt - last_cnt;
-    if(diff >= 2)
-			{
-				last_cnt += 2;
-				return ENCODER_CW;
-			}
-    else if(diff <= -2)
-			{
-				last_cnt -= 2;
-				return ENCODER_CCW;
-			}
+	
+		if(diff > 32767) diff -= 65536;
+		else if (diff < -32768) diff += 65536;
+	
+		last_cnt = cnt;
+	
+    if(diff >= 2) return ENCODER_CW;
+    else if(diff <= -2) return ENCODER_CCW;
     return ENCODER_NONE;
 }
 
@@ -63,13 +62,4 @@ EncoderEvent encoderPress()
 			break;
 		}
 		return ENCODER_NONE;
-}
-
-EncoderEvent encoderGetEvent()
-{	
-		EncoderEvent event = encoderRotation();
-
-		if(event != ENCODER_NONE) return event;
-	
-		return encoderPress();
 }

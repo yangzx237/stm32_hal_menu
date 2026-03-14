@@ -14,6 +14,5 @@ typedef enum
 
 EncoderEvent encoderRotation(void);
 EncoderEvent encoderPress(void);
-EncoderEvent encoderGetEvent(void);
 
 #endif

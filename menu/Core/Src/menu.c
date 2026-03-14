@@ -1,18 +1,22 @@
 #include "menu.h"
 #include "oled.h"
 
+//默认菜单
 MenuState menu = MENU_MAIN;
 
+//各个菜单的索引变量
 uint8_t main_index = 0;
 uint8_t led_index = 0;
 uint8_t led_switch_index = 0;
 uint8_t led_brightness_index = 0;
 uint8_t led_brightness_ccr3_index = 0;
+
 uint16_t ccr3 = 0;
 uint8_t edit_mode = 0;
 
-// 需要检查各个index的值，不然会出现上溢出，也就是255之后是0或者下溢出，也就是0下面是255
+//需要检查各个index的值，不然会出现上溢出，也就是255之后是0或者下溢出，也就是0下面是255
 //负责处理逻辑，不负责显示内容
+//接收到触发事件之后，根据当前菜单状态进行响应更新操作
 void menuUpdate(EncoderEvent event)
 {
 		switch(menu)
@@ -132,6 +136,7 @@ void menuUpdate(EncoderEvent event)
 		}
 }
 
+//根据菜单状态决定显示内容，默认为主菜单，前面已经定义
 void menuDisplay()
 {
 		switch(menu)

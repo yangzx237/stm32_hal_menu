@@ -106,17 +106,18 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	HAL_TIM_Encoder_Start(&htim2,TIM_CHANNEL_ALL);
 	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_3);
+	//上电显示默认菜单
 	menuDisplay();
   while (1)
   {  
 		EncoderEvent event;
-		
+		//先判断旋转，如果没有旋转事件再判断按键事件，发生触发事件才进行状态的更新
 		while((event = encoderRotation()) != ENCODER_NONE) menuUpdate(event);
 		
 		event = encoderPress();
 		
 		if(event != ENCODER_NONE) menuUpdate(event);
-		
+		//更新完状态之后，如果菜单状态有变更就更换显示菜单
 		menuDisplay();
     /* USER CODE END WHILE */
 
